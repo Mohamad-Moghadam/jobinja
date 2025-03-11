@@ -24,10 +24,12 @@ media/
 .DS_Store
 
 # Ignore environment variables
+../env/
+env/
+
 .env
 .idea/
 
 *.pyc
 
 local_*.py
-

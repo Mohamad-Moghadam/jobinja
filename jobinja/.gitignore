@@ -14,8 +14,8 @@ db.sqlite3
 **/migrations/**
 
 # Ignore static and media files
-staticfiles/
-media/
+# staticfiles/
+# media/
 
 # Ignore IDE/editor files
 .vscode/

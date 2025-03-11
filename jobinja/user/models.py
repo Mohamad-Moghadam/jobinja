@@ -6,6 +6,6 @@ class User(models.Model):
     national_id = models.CharField(max_length= 11, unique = True)
     email = models.EmailField(null = True, blank = True)
 
-class profile(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(to=User, on_delete= models.CASCADE)
     avatar = models.ImageField(upload_to= 'profile_pics/')

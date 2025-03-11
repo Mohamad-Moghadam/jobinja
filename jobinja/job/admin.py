@@ -1,3 +1,15 @@
 from django.contrib import admin
+from job.models import Job
 
-# Register your models here.
+
+class JobAdmin(admin.ModelAdmin):
+    list_display = ("title", "owner", "status", " created_date")
+    list_filter = ("title", "owner")
+    search_fields = ("title",)
+
+
+admin.site.register(Job)
+
+
+
+

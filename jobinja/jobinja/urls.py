@@ -22,7 +22,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('user.urls'))
+    path('user/', include('user.urls')),
+    path("job/", include("job.urls")),
 ]
 if settings.DEBUG:  # فقط در حالت توسعه
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

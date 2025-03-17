@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'job.apps.JobConfig',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

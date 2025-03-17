@@ -21,4 +21,3 @@ def job_details(request):
         open(file_jobs, "rb"),
         as_attachment=True
     )
-    

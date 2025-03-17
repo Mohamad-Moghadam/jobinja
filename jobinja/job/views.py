@@ -25,7 +25,7 @@ def job_details(request):
 
 @csrf_exempt
 def add_occupation(request):
-    if request == "POST":
+    if request.method == "POST":
         data = json.loads(request.body)
         Job.objects.create(
             title = data.get("title"),
@@ -33,3 +33,4 @@ def add_occupation(request):
             description = data.get("description"),
             status = data.get("status"),
         )
+        return HttpResponse(f"{data.get("title")} was added as a new job!")

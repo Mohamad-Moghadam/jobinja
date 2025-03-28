@@ -27,14 +27,14 @@ def job_details(request):
     )
 
 @csrf_exempt
-def add_occupation(request, user_id):
+def add_occupation(request, user_id: int):
     desiired_user = get_object_or_404(User, id = user_id)
 
     if request.method == "POST":
         data = json.loads(request.body)
         Job.objects.create(
             title = data.get("title"),
-            user = desiired_user,
+            owner = desiired_user,
             description = data.get("description"),
             status = data.get("status"),
         )

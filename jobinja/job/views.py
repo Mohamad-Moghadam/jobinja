@@ -5,6 +5,9 @@ import os
 import json
 from django.views.decorators.csrf import csrf_exempt
 from job.models import Job
+from django.shortcuts import get_object_or_404
+from user.models import User
+
 
 def display_job_page(request):
     return HttpResponse("Hello and welcome this is job page!")
@@ -24,12 +27,14 @@ def job_details(request):
     )
 
 @csrf_exempt
-def add_occupation(request):
+def add_occupation(request, user_id):
+    desiired_user = get_object_or_404(User, id = user_id)
+
     if request.method == "POST":
         data = json.loads(request.body)
         Job.objects.create(
             title = data.get("title"),
-            user_id = data.get("owner_id"),
+            user = desiired_user,
             description = data.get("description"),
             status = data.get("status"),
         )

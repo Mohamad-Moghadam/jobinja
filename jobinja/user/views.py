@@ -4,6 +4,7 @@ import os
 import json
 from user.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.hashers import check_password
 
 
 def user_welcome(request):
@@ -28,3 +29,44 @@ def sign_up(request):
             interested_in = data.get("interested_in"),
         )
         return HttpResponse(f"{data.get("name")} signed up.")
+    
+
+@csrf_exempt
+def login(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        name = data.get("name"),
+        password = data.get("password")
+
+        user = User.objects.filter(name = name).first()
+
+        if user is None:
+            return HttpResponse("the user was not found.")
+        
+        if not check_password(password,user.password):
+            return HttpResponse("your password is incorrect.")
+        
+        return HttpResponse(f"welcome {name}")
+
+    return HttpResponse ("please enter your name and password")
+
+@csrf_exempt
+def login(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        name = data.get("name"),
+        password = data.get("password")
+
+        user = User.objects.filter(name = name).first()
+
+        if user is None:
+            return HttpResponse("the user was not found.")
+        
+        if not check_password(password,user.password):
+            return HttpResponse("your password is incorrect.")
+        
+        return HttpResponse(f"welcome {name}")
+
+    return HttpResponse ("please enter your name and password")

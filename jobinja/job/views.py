@@ -9,48 +9,53 @@ from django.shortcuts import get_object_or_404
 from user.models import User
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from job.serializers import JobSerializer
+from rest_framework.permissions import IsAuthenticated, AllowAny , IsAdminUser, IsAuthenticatedOrReadOnly
 class LsJobs(ListAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
 
 class CreateListView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
+
 
 class RetrieveDestroyUpdateView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
 
 
 
 
-def display_job_page(request):
-    return HttpResponse("Hello and welcome this is job page!")
+# def display_job_page(request):
+#     return HttpResponse("Hello and welcome this is job page!")
 
-def list_jobs(request):
-    jobs = models.Job.objects.filter(status="draft")
-    context = {
-        "jobs":jobs
-    }    
-    return HttpResponse("hello this is jobs!")
+# def list_jobs(request):
+#     jobs = models.Job.objects.filter(status="draft")
+#     context = {
+#         "jobs":jobs
+#     }    
+#     return HttpResponse("hello this is jobs!")
 
-def job_details(request):
-    file_jobs = os.path.join("/home/amirykta/Desktop/practice_jobinja/jobinja/job/jobs_list.pdf")
-    return FileResponse(
-        open(file_jobs, "rb"),
-        as_attachment=True
-    )
+# def job_details(request):
+#     file_jobs = os.path.join("/home/amirykta/Desktop/practice_jobinja/jobinja/job/jobs_list.pdf")
+#     return FileResponse(
+#         open(file_jobs, "rb"),
+#         as_attachment=True
+#     )
 
-@csrf_exempt
-def add_occupation(request, user_id: int):
-    desired_user = get_object_or_404(User, id = user_id)
+# @csrf_exempt
+# def add_occupation(request, user_id: int):
+#     desired_user = get_object_or_404(User, id = user_id)
 
-    if request.method == "POST":
-        data = json.loads(request.body)
-        Job.objects.create(
-            title = data.get("title"),
-            owner = desired_user,
-            description = data.get("description"),
-            status = data.get("status"),
-        )
-        return HttpResponse(f"{data.get("title")} was added as a new job!")
+#     if request.method == "POST":
+#         data = json.loads(request.body)
+#         Job.objects.create(
+#             title = data.get("title"),
+#             owner = desired_user,
+#             description = data.get("description"),
+#             status = data.get("status"),
+#         )
+#         return HttpResponse(f"{data.get("title")} was added as a new job!")

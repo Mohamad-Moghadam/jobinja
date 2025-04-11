@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'user',
     'job.apps.JobConfig',
     'phonenumber_field',
+     'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -79,9 +80,9 @@ WSGI_APPLICATION = 'jobinja.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'main',
-        'USER' : 'kaliuser',
-        'PASSWORD' : 'Databaseishere9',
+        'NAME': 'jobinja',
+        'USER' : 'amirhoseinmousavi',
+        'PASSWORD' : '',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }

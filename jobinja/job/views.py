@@ -7,6 +7,21 @@ from django.views.decorators.csrf import csrf_exempt
 from job.models import Job
 from django.shortcuts import get_object_or_404
 from user.models import User
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from job.serializers import JobSerializer
+class LsJobs(ListAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+class CreateListView(ListCreateAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+class RetrieveDestroyUpdateView(RetrieveUpdateDestroyAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+
+
 
 
 def display_job_page(request):

@@ -10,6 +10,10 @@ from user.models import User
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from job.serializers import JobSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny , IsAdminUser, IsAuthenticatedOrReadOnly
+
+
+
+
 class LsJobs(ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Job.objects.all()

@@ -5,26 +5,20 @@ import json
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
-<<<<<<< HEAD
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveAPIView, DestroyAPIView
-=======
 from django.contrib.auth.hashers import make_password
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveAPIView
->>>>>>> refs/remotes/origin/master
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 from user.serializers import UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
-class CreateUser(CreateAPIView):
+class SignUp(CreateAPIView):
     permission_classes= [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class DeleteUser(DestroyAPIView):
-    
-    
 
 
 

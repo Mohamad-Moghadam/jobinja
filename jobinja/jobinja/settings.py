@@ -40,10 +40,9 @@ INSTALLED_APPS = [
     'user',
     'job.apps.JobConfig',
     'phonenumber_field',
-     'rest_framework',
-     "rest_framework_simplejwt",
-     'django-filter',
-     'django_filters',
+    'rest_framework',
+    "rest_framework_simplejwt",
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -85,9 +84,9 @@ WSGI_APPLICATION = 'jobinja.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jobinja',
-        'USER' : 'amirhoseinmousavi',
-        'PASSWORD' : '',
+        'NAME': 'main',
+        'USER' : 'postgres',
+        'PASSWORD' : 'Postgresqlishere9',
         'HOST' : 'localhost',
         'PORT' : '5432',
     }
@@ -140,10 +139,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication'),
-
-        'DEFAULT_FILTER_BACKENDS':('django_filters.rest_framework.DjangoFilterBackend'),
-
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
 }
 

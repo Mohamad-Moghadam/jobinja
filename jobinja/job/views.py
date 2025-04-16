@@ -10,6 +10,9 @@ from user.models import User
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from job.serializers import JobSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny , IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework import filters
+from django_filters.rest_framework  import DjangoFilterBackend
+
 
 
 
@@ -18,7 +21,9 @@ class LsJobs(ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Job.objects.all()
     serializer_class = JobSerializer
-
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filteret_fields = {'title': ['exact', 'icontains']}
+    search_fields = ['title']
 class CreateListView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Job.objects.all()

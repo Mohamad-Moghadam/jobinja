@@ -6,6 +6,6 @@ urlpatterns = [
     # path("job-details/", job_details),
     # path('add-occupation/<int:user_id>', add_occupation),
     path('job-list', LsJobs.as_view()),
-    # path('CLviews', CreateListView.as_view()),
-    # path('DUR/<int:pk>', RetrieveDestroyUpdateView.as_view()),
+    path('CLviews', CreateListView.as_view()),
+    path('DUR/<int:pk>', RetrieveDestroyUpdateView.as_view()),
 ]

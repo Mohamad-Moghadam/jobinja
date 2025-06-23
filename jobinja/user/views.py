@@ -5,7 +5,7 @@ import json
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
-from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
 from django.contrib.auth.hashers import make_password
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
@@ -18,8 +18,8 @@ class SignUp(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-
-
+class Accept_Application(UpdateAPIView):
+    permission_classes = []
 
 
 

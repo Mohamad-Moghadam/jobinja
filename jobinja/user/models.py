@@ -20,3 +20,12 @@ class Employer(models.Model):
     email = models.EmailField(blank = True, null = True)
     password = models.CharField(max_length = 100)
     companies = models.ForeignKey(Job, on_delete = models.PROTECT, related_name = "employer_companies")
+
+
+class Emplyee(models.Model):
+    username = models.CharField(max_length = 100)
+    national_id = models.IntegerField(max_length = 11)
+    phone_number = PhoneNumberField(region = "IR")
+    email = models.EmailField(blank = True, null = True)
+    password = models.CharField(max_length = 100)
+    resume = models.FileField(upload_to = "resume/")

@@ -21,6 +21,9 @@ class Employer(models.Model):
     password = models.CharField(max_length = 100)
     companies = models.ForeignKey(Job, on_delete = models.PROTECT, related_name = "employer_companies")
 
+    def __str__(self):
+        return self.username
+
 
 class Emplyee(models.Model):
     username = models.CharField(max_length = 100)
@@ -29,3 +32,6 @@ class Emplyee(models.Model):
     email = models.EmailField(blank = True, null = True)
     password = models.CharField(max_length = 100)
     resume = models.FileField(upload_to = "resume/")
+
+    def __str__(self):
+        return self.username

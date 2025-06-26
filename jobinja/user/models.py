@@ -1,11 +1,11 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from jobinja.job.models import Job
+from job.models import Job
 
 class DummyPermissions(models.Model):
 
     class Meta:
-        dummy_permissions = [("add_superuser", "add superuser"),
+        permissions = [("add_superuser", "add superuser"),
                             ("list_superuser", "list superuser"),
                             ("add_technician", "add technician"),
                             ("edit_technician", "edit technician"),

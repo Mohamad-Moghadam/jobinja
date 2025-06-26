@@ -1,12 +1,12 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.conf import settings
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from jobinja.jobinja import permissions
 from .models import DummyPermissions
 
 @receiver(post_save, sender = settings.AUTH_USER_MODEL)
-def assign_user_to_grooup(sender, instance, created, **kwargs):
+def assign_user_to_group(sender, instance, created, **kwargs):
     if not created:
         return
 
@@ -30,11 +30,11 @@ def assign_user_to_grooup(sender, instance, created, **kwargs):
     group, _ = Group.objects.get_or_create(name = group_name)
     Permission_codenames = permissions.USER_GROUP_PERMISSIONS.get(group_name, [])
 
-    dummy_permissions = DummyPermissions.objects.filter(codename__in = Permission_codenames)
+    permission = Permission.objects.filter(codename__in = Permission_codenames)
 
-    for perm in dummy_permissions:
-        if not group.permissions.filter(id = perm.id).exists:
+    for perm in permission:
+        if not group.permissions.filter(id = perm.id).exists():
             group.permissions.add(perm)
 
-    instance.group.add(group)
+    instance.groups.add(group)
     instance.save()

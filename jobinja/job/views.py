@@ -6,7 +6,6 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from job.models import Job
 from django.shortcuts import get_object_or_404
-from user.models import User
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from job.serializers import JobSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny , IsAdminUser, IsAuthenticatedOrReadOnly

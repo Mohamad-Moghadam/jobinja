@@ -1,9 +1,10 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_migrate
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission
-from jobinja.jobinja import permissions
+from jobinja.permissions import USER_PERSMISSION_CLASSES
 from .models import DummyPermissions
+from django.db.utils import OperationalError, ProgrammingError
 
 @receiver(post_save, sender = settings.AUTH_USER_MODEL)
 def assign_user_to_group(sender, instance, created, **kwargs):
@@ -27,14 +28,23 @@ def assign_user_to_group(sender, instance, created, **kwargs):
     if not group_name:
         return
 
-    group, _ = Group.objects.get_or_create(name = group_name)
-    Permission_codenames = permissions.USER_GROUP_PERMISSIONS.get(group_name, [])
+    try:
+        group, _ = Group.objects.get_or_create(name=group_name)
+        permission_codenames = USER_PERSMISSION_CLASSES.USER_GROUP_PERMISSIONS.get(group_name, [])
+        perms = Permission.objects.filter(codename__in=permission_codenames)
 
-    permission = Permission.objects.filter(codename__in = Permission_codenames)
-
-    for perm in permission:
-        if not group.permissions.filter(id = perm.id).exists():
+        for perm in perms:
             group.permissions.add(perm)
 
-    instance.groups.add(group)
-    instance.save()
+        instance.groups.add(group)
+    except (OperationalError, ProgrammingError):
+
+        pass
+
+
+@receiver(post_migrate)
+def create_default_groups(sender, **kwargs):
+    if sender.name == 'auth':
+        group_names = ['Superuser', 'Technician', 'Employer', 'Employee']
+        for name in group_names:
+            Group.objects.get_or_create(name=name)

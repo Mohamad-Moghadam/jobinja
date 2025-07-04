@@ -7,4 +7,6 @@ from django.contrib.auth.models import User
 class NewSuperuser(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsSuperuser]
-    queryset = User.objects.get(group = "Superuser")
+
+    def get_queryset(self):
+        return User.objects.filter(groups__name="Superuser")

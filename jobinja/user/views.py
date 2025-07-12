@@ -9,4 +9,7 @@ class NewSuperuser(CreateAPIView):
     permission_classes = [IsSuperuser]
 
     def get_queryset(self):
-        return User.objects.filter(groups__name="Superuser")
+        return User.objects.filter(groups__name = "Superuser")
+
+    def perform_create(self, serializer):
+        User.is_superuser = True

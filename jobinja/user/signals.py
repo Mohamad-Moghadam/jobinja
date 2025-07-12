@@ -19,10 +19,10 @@ def assign_user_to_group(sender, instance, created, **kwargs):
     elif not instance.is_superuser and instance.is_staff:
         group_name = "Technician"
 
-    elif instance.type == "Employer":
+    elif getattr(instance, "type", None) == "Employer":
         group_name = "Employer"
 
-    elif instance.type == "Employee":
+    elif getattr(instance, "type", None) == "Employee":
         group_name = "Employee"
 
     if not group_name:
@@ -30,7 +30,7 @@ def assign_user_to_group(sender, instance, created, **kwargs):
 
     try:
         group, _ = Group.objects.get_or_create(name=group_name)
-        permission_codenames = USER_PERSMISSION_CLASSES.USER_GROUP_PERMISSIONS.get(group_name, [])
+        permission_codenames = USER_PERSMISSION_CLASSES.get(group_name, [])
         perms = Permission.objects.filter(codename__in=permission_codenames)
 
         for perm in perms:

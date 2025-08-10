@@ -19,8 +19,8 @@ def assign_user_to_group(sender, instance, created, **kwargs):
     elif not instance.is_superuser and instance.is_staff:
         group_name = "Technician"
 
-    elif getattr(instance, "type", None) == "Employer":
-        group_name = "Employer"
+    elif getattr(instance, "type", None) == "Entrepreneur":
+        group_name = "Entrepreneur"
 
     elif getattr(instance, "type", None) == "Employee":
         group_name = "Employee"
@@ -30,16 +30,10 @@ def assign_user_to_group(sender, instance, created, **kwargs):
 
     try:
         group, _ = Group.objects.get_or_create(name=group_name)
-        permission_codenames = USER_PERSMISSION_CLASSES.get(group_name, [])
-        perms = Permission.objects.filter(codename__in=permission_codenames)
-
-        for perm in perms:
-            group.permissions.add(perm)
-
         instance.groups.add(group)
-    except (OperationalError, ProgrammingError):
-
+    except (OperationalError, ProgrammingError, Group.DoesNotExist):
         pass
+
 
 
 @receiver(post_migrate)
@@ -48,3 +42,7 @@ def create_default_groups(sender, **kwargs):
         group_names = ['Superuser', 'Technician', 'Employer', 'Employee']
         for name in group_names:
             Group.objects.get_or_create(name=name)
+
+        permission_codenames = USER_PERSMISSION_CLASSES.get(name, [])
+        perms = Permission.objects.filter(codename__in=permission_codenames)
+        group.permissions.set(perms)

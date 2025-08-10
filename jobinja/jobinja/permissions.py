@@ -1,7 +1,7 @@
 USER_PERSMISSION_CLASSES = {
 
     "Superuser" : [
-        "add_superuser", "list_superuser", "add_technicians", "edit_technicians", "delete_technicians", "list_technicians", "retrieve_technicians", "add_entrepreneur", "edit_entrepreneur", "delete_entrepreneur", "list_entrepreneur", "edit_job", "delete_job", "list_job"
+        "add_superuser", "list_superuser", "add_technician", "edit_technician", "delete_technician", "list_technician", "retrieve_technician", "add_entrepreneur", "edit_entrepreneur", "delete_entrepreneur", "list_entrepreneur", "edit_job", "delete_job", "list_job"
     ],
 
     "Technician" : [
